@@ -1,6 +1,8 @@
 import React from 'react';
 import skuData from './SKUNinja-sample-logs.json';
 import './App.css';
+import Container from 'react-bootstrap/Container';
+import Table from 'react-bootstrap/Table';
 
 class App extends React.Component {
   constructor(){
@@ -24,15 +26,26 @@ class App extends React.Component {
   render() {
     console.log('this.state', this.state)
     return (
-      <div className="App">
+      <Container className="App">
         <h1>SKU Sample record Logger</h1>
-        {this.state.data.map(logs => (
-          <div key={logs.id}>
-            {logs.created}
-            {logs.subject}
-          </div>
-        ))}
-      </div>
+        <Table className="Table">
+          <thead>
+            <tr>
+             
+              <th>Date and Time</th>
+              <th>Subject</th>
+            </tr>
+          </thead>
+          {this.state.data.map(logs => (
+              <tbody key={logs.id}>
+                <tr>
+                  <td>{logs.created}</td>
+                  <td> {logs.subject}</td>
+                </tr>
+              </tbody>
+          ))}
+        </Table>
+      </Container>
     );
   }
 }
