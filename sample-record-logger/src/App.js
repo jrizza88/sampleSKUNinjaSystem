@@ -3,12 +3,15 @@ import skuData from './SKUNinja-sample-logs.json';
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      data: skuData,
+      dataLogs: skuData,
+      dataType: '',
       showModal: false,
     }
   }
@@ -16,10 +19,40 @@ class App extends React.Component {
   // fetching data upon mounting the component
   componentDidMount(){
     fetch('./SKUNinja-sample-logs.json')
-    // here I 
     .then((res) => res.json())
-    .then(data => this.setState({data: data}))
-    .catch(error => console.error(error))
+    .then(data => this.setState({dataLogs: data}))
+    .catch(error => console.error('The following error occured: ', error))
+  }
+
+
+
+  renderData(){
+      return this.state.dataLogs.map(logs => {
+       let splitDate = logs.created.split(' ')
+       let date = splitDate[0]
+       let time = splitDate[1]
+       let colorType = '';
+       switch (this.state.dataType === ''){
+         case (logs.type === "1"):
+          colorType = 'table-success'
+         break;
+         case (logs.type === "2"):
+          colorType = 'table-warning'
+          break;
+          case (logs.type === "3"):
+            colorType = 'table-danger'
+            break;
+         default: colorType = 'table-primary'
+       }
+       return ( <tbody key={logs.id}>
+          <tr className={`${colorType}`}>
+            <td>{date}</td>
+            <td>{time}</td>
+            <td> {logs.subject}</td>
+          </tr>
+        </tbody>
+       )
+    })
   }
 
 
@@ -27,23 +60,24 @@ class App extends React.Component {
     console.log('this.state', this.state)
     return (
       <Container className="App">
-        <h1>SKU Sample record Logger</h1>
+        <h1>SKU Sample Record Logger</h1>
         <Table className="Table">
           <thead>
             <tr>
-             
-              <th>Date and Time</th>
+              <th>Date</th>
+              <th>Time</th>
               <th>Subject</th>
             </tr>
           </thead>
-          {this.state.data.map(logs => (
+          {this.renderData()}
+          {/* {this.state.data.map(logs => (
               <tbody key={logs.id}>
                 <tr>
                   <td>{logs.created}</td>
                   <td> {logs.subject}</td>
                 </tr>
               </tbody>
-          ))}
+          ))} */}
         </Table>
       </Container>
     );
