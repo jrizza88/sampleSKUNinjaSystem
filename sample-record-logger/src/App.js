@@ -28,9 +28,9 @@ class App extends React.Component {
 
   renderData(){
       return this.state.dataLogs.map(logs => {
-       let splitDate = logs.created.split(' ')
-       let date = splitDate[0]
-       let time = splitDate[1]
+       let splitDateAndTime = logs.created.split(' ')
+       let date = splitDateAndTime[0]
+       let time = splitDateAndTime[1]
        let colorType = '';
        switch (this.state.dataType === ''){
          case (logs.type === "1"):
