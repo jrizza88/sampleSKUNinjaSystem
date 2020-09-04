@@ -27,7 +27,8 @@ class App extends React.Component {
       <div className="App">
         <h1>SKU Sample record Logger</h1>
         {this.state.data.map(logs => (
-          <div>
+          <div key={logs.id}>
+            {logs.created}
             {logs.subject}
           </div>
         ))}
