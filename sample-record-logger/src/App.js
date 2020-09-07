@@ -3,7 +3,7 @@ import skuData from './SKUNinja-sample-logs.json';
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
-import { ModalDialog,  ModalBody } from 'react-bootstrap';
+import { Form, FormControl, Button, ModalDialog,  ModalBody } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 
 
@@ -14,7 +14,10 @@ class App extends React.Component {
       dataLogs: skuData,
       dataType: '',
       showModal: false,
-      item: ''
+      item: '',
+      searchedItem: '',
+      filterData: [],
+    
     }
   }
 
@@ -29,8 +32,8 @@ class App extends React.Component {
 
 
 
-  renderData(){
-    return this.state.dataLogs.map((logs, i) => {
+  renderData = () => {
+     return this.state.dataLogs.map((logs, i) => {
       const { type, created, subject } = logs
         const splitDateAndTime = created.split(' ')
         const date = splitDateAndTime[0]
@@ -49,7 +52,7 @@ class App extends React.Component {
         default: colorType = 'table-light'
         }
       return ( 
-      <tbody key={i}>
+      <tbody key={i}> 
         <tr id={i} className={`${colorType}`} onClick={(event) => this.openModal(event)}>
           <td>{date}</td>
           <td>{time}</td>
@@ -58,6 +61,7 @@ class App extends React.Component {
       </tbody>
        )
     })
+    
   }
 
 
@@ -79,29 +83,99 @@ class App extends React.Component {
   }
 
  findEntry = () => {
-  //  const itemlocation = this.state.dataLogs[this.state.item].id
-  // const findIt = this.state.dataLogs.filter(target => target.subject === itemlocation.subject)
-  // console.log('findit..', findIt)
+  const datalogs = this.state.dataLogs
+  const item = this.state.item
   return (
-    <ModalDialog id={`${this.state.item}`}  centered>
+    <ModalDialog id={`${item}`}  centered>
     <ModalHeader closeButton onClick={this.closeModal} >
-    {this.state.dataLogs[this.state.item].subject}
+    {datalogs[item].subject}
     </ModalHeader>
     <ModalBody>
-   {this.state.dataLogs[this.state.item].body !== null ? this.state.dataLogs[this.state.item].body : 'No body present'}
+   {datalogs[item].body !== null ? datalogs[item].body : 'No body present'}
     </ModalBody>
   </ModalDialog> 
   )
  }
 
 
+  filterDataFunction = () => {
+    let dataT = [...this.state.dataLogs]
+    let filteredSearch = dataT.filter((data) => {
+      return data.subject.toLowerCase().includes(this.state.searchedItem.toLowerCase())
+    })
+
+    console.log('filteredSearch: ', filteredSearch)
+    console.log('...', dataT)
+  
+    return filteredSearch.map((logs, i) => {
+      const { type, created, subject } = logs
+        const splitDateAndTime = created.split(' ')
+        const date = splitDateAndTime[0]
+        const time = splitDateAndTime[1]
+        let colorType = '';
+        switch (this.state.dataType === ''){
+        case (type === "1"):
+          colorType = 'table-success'
+          break;
+        case (type === "2"):
+          colorType = 'table-warning'
+          break;
+        case (type === "3"):
+          colorType = 'table-danger'
+          break;
+        default: colorType = 'table-light'
+        }
+      return ( 
+      <tbody key={i}> 
+        <tr id={i} className={`${colorType}`} onClick={(event) => this.openModal(event)}>
+          <td>{date}</td>
+          <td>{time}</td>
+          <td>{subject}</td>
+        </tr>
+      </tbody>
+       )
+    })
+  }
+  //console.log(event)
+    // const findTarget = datalogs.filter(target => { 
+    //   if (target.subject.includes(`${target.subject}`)
+    //   .map(filteredTarget => { 
+    //     console.log('find the filteredTarget...', filteredTarget) 
+    //    }))
+    
+    // // return filteredTarget.subject
+    // // this.setState({searchedItem: findItem})
+    // this.setState({searchedItem: findTarget})
+    // console.log('target...', event.target.value)
+  // console.log('find the item...', findItem)
+  // console.log('find the item...', findTarget)
+
+  // console.log('filtered item', this.state.searchedItem)
+
+handleChange = event => {
+  console.log(event.target.value)
+  this.setState({searchedItem: event.target.value});
+}
+
+ onHandleSubmit = event => {
+   event.preventDefault()
+   this.setState({
+    searchedItem: ''
+   })
+ }
+
+
 
 
   render() {
-
     return (
       <Container className="App">
         <h1>SKU Sample Record Logger</h1>
+        <Form inline>
+          <FormControl type="text" placeholder="Search by Subject" className="mr-sm-2" onChange={this.handleChange} value={this.state.searchedItem}/>
+          {/* <Button type="submit" variant="outline-success" onSubmit={this.onHandleSubmit} >Search</Button> */}
+        </Form>
+
         {this.state.showModal ? this.findEntry() : null} 
         <Table className="Table">
           <thead>
@@ -111,8 +185,7 @@ class App extends React.Component {
               <th>Subject</th>
             </tr>
           </thead>
-          {this.renderData()}
-
+          {this.state.searchedItem.length > 0 ? this.filterDataFunction() : this.renderData()}
         </Table>
       </Container>
     );
