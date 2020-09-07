@@ -1,4 +1,4 @@
 [build]
 base = "sample-record-logger/"
-publish = "sample-record-logger/build/"
+publish = "build/"
 command = "yarn build"
