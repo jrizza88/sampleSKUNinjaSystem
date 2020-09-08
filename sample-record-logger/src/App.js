@@ -22,9 +22,9 @@ class App extends React.Component {
   // fetching data upon mounting the component
   componentDidMount(){
     fetch(`./SKUNinja-sample-logs.json`)
-    .then(res => res.text())          // convert to plain text to avoid the "Unexpected token < in JSON at position 0"
-    // .then((res) => res.json())
-    // .then(data => this.setState({dataLogs: data}))
+    // .then(res => res.text())          // convert to plain text to avoid the "Unexpected token < in JSON at position 0"
+    .then((res) => res.json())
+    .then(data => this.setState({dataLogs: data}))
     .catch(error => console.error('The following error occured: ', error, console.warn(error.responseText)))
   }
 
@@ -50,9 +50,9 @@ class App extends React.Component {
       return ( 
       <tbody key={i} > 
         <tr id={i} className={`${colorType}`} onClick={(event) => this.openModal(event)}>
-          <td className="hoverTable">{date}</td>
-          <td className="hoverTable">{time}</td>
-          <td className="hoverTable">{subject}</td>
+          <td className="hover-table">{date}</td>
+          <td className="hover-table">{time}</td>
+          <td className="hover-table">{subject}</td>
         </tr>
       </tbody>
        )
@@ -150,7 +150,7 @@ handleChange = event => {
       <Container className="app">
         <h1 className="site-header">SKU Sample Record Logger</h1>
         <Form fluid="md">
-          <FormControl type="text" placeholder="Search by Subject" className="mr-sm-2" onChange={this.handleChange} value={this.state.searchedItem}/>
+          <FormControl className="search-form" type="text" placeholder="Search by Subject"  onChange={this.handleChange} value={this.state.searchedItem}/>
         </Form>
         {this.state.showModal ? this.findEntryModal() : null} 
         <Table className="Table">
