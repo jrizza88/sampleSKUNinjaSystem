@@ -20,7 +20,7 @@
 }
 
 .site-header {
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 .8rem 0;
 }
 
 
@@ -32,4 +32,13 @@
 
 .hover-table {
 cursor: pointer;
+}
+
+.search-form{
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 20px;
+  padding-bottom: 4px;
+  padding-left: 5px;
 }

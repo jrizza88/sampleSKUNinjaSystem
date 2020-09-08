@@ -149,9 +149,9 @@ handleChange = event => {
     return (
       <Container className="app">
         <h1 className="site-header">SKU Sample Record Logger</h1>
-        <Form fluid="md">
-          <FormControl className="search-form" type="text" placeholder="Search by Subject"  onChange={this.handleChange} value={this.state.searchedItem}/>
-        </Form>
+        
+          <input className="search-form" type="text" placeholder="Search by Subject"  onChange={this.handleChange} value={this.state.searchedItem}/>
+     
         {this.state.showModal ? this.findEntryModal() : null} 
         <Table className="Table">
           <thead >
