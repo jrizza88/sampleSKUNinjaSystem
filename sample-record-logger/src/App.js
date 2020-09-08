@@ -21,10 +21,12 @@ class App extends React.Component {
 
   // fetching data upon mounting the component
   componentDidMount(){
-    fetch(`./SKUNinja-sample-logs.json`)
-    .then((res) => res.json())
-    .then(data => this.setState({dataLogs: data}))
-    .catch(error => console.error('The following error occured: ', error, console.warn(error.responseText)))
+    fetch(skuData)
+    .then(res => res.text())
+    // .then((res) => res.json())
+    // .then(data => this.setState({dataLogs: data}))
+    // Adding 
+    .catch(error => console.error('The following error occured: ', error))
   }
 
   renderData = () => {
@@ -132,7 +134,8 @@ handleChange = event => {
   const item = this.state.item
   
   return (
-      <Modal  show={this.openModal}
+      <Modal  
+      show={this.state.showModal}
       id={`${item}`}
       backdrop="static"
       keyboard={false} centered
@@ -141,7 +144,7 @@ handleChange = event => {
         <ModalHeader className="modal-header"  closeButton onClick={this.closeModal}>
         {datalogs[item].subject}
         </ModalHeader>
-        <ModalBody>
+        <ModalBody className="modal-body">
       {datalogs[item].body !== null ? datalogs[item].body : 'No body present'}
         </ModalBody>
     </Modal> 
