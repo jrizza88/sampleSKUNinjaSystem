@@ -15,8 +15,7 @@ class App extends React.Component {
       dataType: '',
       showModal: false,
       item: '',
-      searchedItem: '',
-      hover: false
+      searchedItem: ''
     }
   }
 
@@ -49,11 +48,11 @@ class App extends React.Component {
         default: colorType = 'table-light'
         }
       return ( 
-      <tbody key={i}> 
+      <tbody key={i} > 
         <tr id={i} className={`${colorType}`} onClick={(event) => this.openModal(event)}>
-          <td>{date}</td>
-          <td>{time}</td>
-          <td>{subject}</td>
+          <td className="hoverTable">{date}</td>
+          <td className="hoverTable">{time}</td>
+          <td className="hoverTable">{subject}</td>
         </tr>
       </tbody>
        )
@@ -86,10 +85,10 @@ class App extends React.Component {
         }
         return ( 
       <tbody key={i}> 
-        <tr id={i} className={`${colorType}`} onClick={(event) => this.openModal(event)} style={{}}>
-          <td>{date}</td>
-          <td>{time}</td>
-          <td>{subject}</td>
+        <tr id={i} className={`${colorType}`} onClick={(event) => this.openModal(event)}>
+          <td active>{date}</td>
+          <td active>{time}</td>
+          <td active>{subject}</td>
         </tr>
       </tbody>
        )
@@ -104,14 +103,6 @@ class App extends React.Component {
   }
   }
 
-hoverRow = (hoverR) => {
-  this.setState({hover: !this.state.hover})
-  if (this.state.hover) {
-    hoverR = {fontWeight: 'bold'}
-  } else {
-    hoverR = {fontWeight: 'inherit'}
-  }
-}
 
 handleChange = event => {
   this.setState({searchedItem: event.target.value});
