@@ -22,7 +22,6 @@ class App extends React.Component {
   // fetching data upon mounting the component
   componentDidMount(){
     fetch(`./SKUNinja-sample-logs.json`)
-    // .then(res => res.text())          // convert to plain text to avoid the "Unexpected token < in JSON at position 0"
     .then((res) => res.json())
     .then(data => this.setState({dataLogs: data}))
     .catch(error => console.error('The following error occured: ', error, console.warn(error.responseText)))
@@ -95,10 +94,14 @@ class App extends React.Component {
     })
   } 
   else {
-    return ( 
-      <div> 
-        <div className="nullSearch">No results available</div>
-      </div>
+    return (
+      <tbody> 
+      <tr>
+        <td></td>
+        <td className="null-search">No results available</td>
+        <td></td>
+      </tr>       
+    </tbody>
     )
   }
   }
