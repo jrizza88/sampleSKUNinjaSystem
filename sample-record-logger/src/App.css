@@ -1,9 +1,15 @@
 .App {
+  background: #efefef;
   text-align: center;
-  /* background-color: #e9ecef; */
 }
 
-.date {
-  position: absolute;
+.siteHeader {
+  padding-top: 1rem;
+}
+
+
+.modal{
+  /* position: fixed; */
+  background: purple;
 }
 

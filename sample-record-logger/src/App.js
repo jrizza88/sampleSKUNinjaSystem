@@ -64,7 +64,7 @@ class App extends React.Component {
     let filteredSearch = dataT.filter((data) => {
       return data.subject.toLowerCase().includes(this.state.searchedItem.toLowerCase())
     })
-    if (this.state.filteredSearch > 0) {
+    if (filteredSearch.length  > 0) {
     return filteredSearch.map((logs, i) => {
       const { type, created, subject } = logs
         const splitDateAndTime = created.split(' ')
@@ -93,7 +93,8 @@ class App extends React.Component {
       </tbody>
        )
     })
-  } else {
+  } 
+  else {
     return ( 
       <div> 
         <div className="nullSearch">No results available</div>
@@ -103,7 +104,6 @@ class App extends React.Component {
   }
 
 handleChange = event => {
-  console.log(event.target.value)
   this.setState({searchedItem: event.target.value});
 }
 
@@ -125,21 +125,21 @@ handleChange = event => {
   const datalogs = this.state.dataLogs
   const item = this.state.item
   return (
-    <ModalDialog id={`${item}`}  centered>
-    <ModalHeader closeButton onClick={this.closeModal} >
-    {datalogs[item].subject}
-    </ModalHeader>
-    <ModalBody>
-   {datalogs[item].body !== null ? datalogs[item].body : 'No body present'}
-    </ModalBody>
-  </ModalDialog> 
+      <ModalDialog centered>
+        <ModalHeader closeButton onClick={this.closeModal} >
+        {datalogs[item].subject}
+        </ModalHeader>
+        <ModalBody>
+      {datalogs[item].body !== null ? datalogs[item].body : 'No body present'}
+        </ModalBody>
+    </ModalDialog> 
   )
  }
 
   render() {
     return (
       <Container className="App">
-        <h1>SKU Sample Record Logger</h1>
+        <h1 className="siteHeader">SKU Sample Record Logger</h1>
         <Form fluid="md">
           <FormControl type="text" placeholder="Search by Subject" className="mr-sm-2" onChange={this.handleChange} value={this.state.searchedItem}/>
         </Form>
