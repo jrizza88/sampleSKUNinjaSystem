@@ -3,7 +3,7 @@ import skuData from './SKUNinja-sample-logs.json';
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
-import { Form, FormControl, Modal, ModalBody } from 'react-bootstrap';
+import {Modal, ModalBody } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 
 
@@ -149,12 +149,10 @@ handleChange = event => {
     return (
       <Container className="app">
         <h1 className="site-header">SKU Sample Record Logger</h1>
-        
           <input className="search-form" type="text" placeholder="Search by Subject"  onChange={this.handleChange} value={this.state.searchedItem}/>
-     
         {this.state.showModal ? this.findEntryModal() : null} 
         <Table className="Table">
-          <thead >
+          <thead>
             <tr className="table-active">
               <th sm={4}>Date</th>
               <th sm={4}>Time</th>
