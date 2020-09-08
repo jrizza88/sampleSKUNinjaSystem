@@ -3,7 +3,7 @@ import skuData from './SKUNinja-sample-logs.json';
 import './App.css';
 import Container from 'react-bootstrap/Container';
 import Table from 'react-bootstrap/Table';
-import { Form, FormControl, ModalDialog, ModalBody } from 'react-bootstrap';
+import { Form, FormControl, Modal, ModalBody } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 
 
@@ -16,6 +16,7 @@ class App extends React.Component {
       showModal: false,
       item: '',
       searchedItem: '',
+      hover: false
     }
   }
 
@@ -85,7 +86,7 @@ class App extends React.Component {
         }
         return ( 
       <tbody key={i}> 
-        <tr id={i} className={`${colorType}`} onClick={(event) => this.openModal(event)}>
+        <tr id={i} className={`${colorType}`} onClick={(event) => this.openModal(event)} style={{}}>
           <td>{date}</td>
           <td>{time}</td>
           <td>{subject}</td>
@@ -103,6 +104,15 @@ class App extends React.Component {
   }
   }
 
+hoverRow = (hoverR) => {
+  this.setState({hover: !this.state.hover})
+  if (this.state.hover) {
+    hoverR = {fontWeight: 'bold'}
+  } else {
+    hoverR = {fontWeight: 'inherit'}
+  }
+}
+
 handleChange = event => {
   this.setState({searchedItem: event.target.value});
 }
@@ -113,39 +123,47 @@ handleChange = event => {
         showModal: true,
         item: event.currentTarget.getAttribute('id'),
       })
+      console.log('modal open')
   }
 
   closeModal = () => {
       this.setState({
         showModal: false
       })
+      console.log('modal closed')
   }
 
  findEntryModal = () => {
   const datalogs = this.state.dataLogs
   const item = this.state.item
+  
   return (
-      <ModalDialog centered>
-        <ModalHeader closeButton onClick={this.closeModal} >
+      <Modal  show={this.openModal}
+      id={`${item}`}
+      backdrop="static"
+      keyboard={false} centered
+      className="modal"
+      >
+        <ModalHeader className="modal-header"  closeButton onClick={this.closeModal}>
         {datalogs[item].subject}
         </ModalHeader>
         <ModalBody>
       {datalogs[item].body !== null ? datalogs[item].body : 'No body present'}
         </ModalBody>
-    </ModalDialog> 
+    </Modal> 
   )
  }
 
   render() {
     return (
-      <Container className="App">
-        <h1 className="siteHeader">SKU Sample Record Logger</h1>
+      <Container className="app">
+        <h1 className="site-header">SKU Sample Record Logger</h1>
         <Form fluid="md">
           <FormControl type="text" placeholder="Search by Subject" className="mr-sm-2" onChange={this.handleChange} value={this.state.searchedItem}/>
         </Form>
         {this.state.showModal ? this.findEntryModal() : null} 
         <Table className="Table">
-          <thead>
+          <thead >
             <tr className="table-active">
               <th sm={4}>Date</th>
               <th sm={4}>Time</th>

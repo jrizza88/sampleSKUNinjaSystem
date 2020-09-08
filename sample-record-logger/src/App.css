@@ -1,15 +1,23 @@
-.App {
+.app {
   background: #efefef;
   text-align: center;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding-bottom: 20px;
 }
 
-.siteHeader {
-  padding-top: 1rem;
+.site-header {
+  padding: 1.5rem 0;
 }
 
 
-.modal{
-  /* position: fixed; */
-  background: purple;
+.modal-header{
+  text-align: center;
+  font-size: 1.2rem;
+  background: rgba(0,0,0,.075);
 }
 
+.welp:hover {
+  background: green;
+    font-weight: bold;
+}
